@@ -1,11 +1,14 @@
-import express from 'express'
-import dotenv from 'dotenv'
-import {connectDB} from './config/db'
+import express from "express";
+import dotenv from "dotenv";
+import { connectDB } from "./config/db";
+import projectRoutes from "./routes/projectRoutes";
 
-dotenv.config()
+dotenv.config();
 
-connectDB()
-const app = express()
+connectDB();
+const app = express();
 
+// Routes
+app.use("/api/projects", projectRoutes);
 
-export default app
+export default app;
