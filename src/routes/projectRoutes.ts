@@ -7,7 +7,7 @@ const router = Router();
 
 router.post(
   "/",
-  body("ProjectName").notEmpty().withMessage("Project Name is required"),
+  body("projectName").notEmpty().withMessage("Project Name is required"),
   body("clientName").notEmpty().withMessage("Client Name is required"),
   body("description").notEmpty().withMessage("Description is required"),
   handleInputErrors,
@@ -25,6 +25,16 @@ router.get(
   param("id").isMongoId().withMessage("Invalid Project ID"),
   handleInputErrors,
   ProjectController.getProjectById
+);
+
+router.put(
+  "/:id",
+  param("id").isMongoId().withMessage("Invalid Project ID"),
+  body("projectName").notEmpty().withMessage("Project Name is required"),
+  body("clientName").notEmpty().withMessage("Client Name is required"),
+  body("description").notEmpty().withMessage("Description is required"),
+  handleInputErrors,
+  ProjectController.updateProject
 );
 
 export default router;
