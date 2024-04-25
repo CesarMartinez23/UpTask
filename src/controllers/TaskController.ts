@@ -12,10 +12,9 @@ export class TaskController {
     }
     try {
       const task = new Task({ ...req.body, project: projectId });
-      task.project = project._id;
-      project.tasks.push(task._id);
-      await task.save();
-      await project.save();
+      task.project = req.project._id;
+      req.project.tasks.push(task._id);
+      await Promise.allSettled([task.save(), req.project.save()]);
       res.status(201).send(task);
     } catch (error) {
       console.log(error);
