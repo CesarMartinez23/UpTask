@@ -17,7 +17,18 @@ export class TaskController {
       await Promise.allSettled([task.save(), req.project.save()]);
       res.status(201).send(task);
     } catch (error) {
-      console.log(error);
+      const errormsg = new Error("Project not found");
+      res.status(500).json({ error: errormsg.message });
+    }
+  }
+
+  static async getProjectTasks(req: Request, res: Response) {
+    try {
+      const tasks = await Task.find({ project: req.project._id });
+      res.json(tasks);
+    } catch (error) {
+      const errormsg = new Error("Project not found");
+      res.status(500).json({ error: errormsg.message });
     }
   }
 }
