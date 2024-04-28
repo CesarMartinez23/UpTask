@@ -63,6 +63,7 @@ router.get("/:projectId/tasks", TaskController.getProjectTasks);
 router.get(
   "/:projectId/tasks/:taskId",
   param("taskId").isMongoId().withMessage("Invalid Task ID"),
+  handleInputErrors,
   TaskController.getTaskById
 );
 
@@ -73,6 +74,13 @@ router.put(
   body("description").notEmpty().withMessage("Task Description is required"),
   handleInputErrors,
   TaskController.updateTask
+);
+
+router.delete(
+  "/:projectId/tasks/:taskId",
+  param("taskId").isMongoId().withMessage("Invalid Task ID"),
+  handleInputErrors,
+  TaskController.deleteTask
 );
 
 export default router;
