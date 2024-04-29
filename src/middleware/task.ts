@@ -28,3 +28,15 @@ export async function taskExists(
     res.status(500).json({ error: errormsg.message });
   }
 }
+
+export function taskBelongsToProject(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
+  if (req.task.project.toString() !== req.project._id.toString()) {
+    const error = new Error("Task not found in project");
+    return res.status(400).json({ error: error.message });
+  }
+  next();
+}
