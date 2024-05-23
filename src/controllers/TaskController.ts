@@ -15,7 +15,7 @@ export class TaskController {
       task.project = req.project._id;
       req.project.tasks.push(task._id);
       await Promise.allSettled([task.save(), req.project.save()]);
-      res.status(201).send(task);
+      res.send("Tarea creada correctamente");
     } catch (error) {
       const errormsg = new Error("Project not found");
       res.status(500).json({ error: errormsg.message });
@@ -48,7 +48,7 @@ export class TaskController {
       req.task.name = req.body.name;
       req.task.description = req.body.description;
       await req.task.save();
-      res.send("Task updated successfully");
+      res.send("Tarea actualizada correctamente");
     } catch (error) {
       const errormsg = new Error("Task not found");
       res.status(500).json({ error: errormsg.message });
@@ -61,7 +61,7 @@ export class TaskController {
         (task) => task.toString() !== req.task._id.toString()
       );
       await Promise.allSettled([req.task.deleteOne(), req.project.save()]);
-      res.send("Task deleted successfully");
+      res.send("Tarea eliminada correctamente");
     } catch (error) {
       const errormsg = new Error("Task not found");
       res.status(500).json({ error: errormsg.message });
@@ -73,7 +73,7 @@ export class TaskController {
       const { status } = req.body;
       req.task.status = status;
       await req.task.save();
-      res.send("Task status updated successfully");
+      res.send("Estado de la tarea actualizado correctamente");
     } catch (error) {
       const errormsg = new Error("Task not found");
       res.status(500).json({ error: errormsg.message });
